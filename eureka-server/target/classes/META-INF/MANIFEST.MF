@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Built-By: joonhyuck.park
+Build-Jdk: 17.0.1
+Implementation-Title: Eureka Server
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: org.exampledriven
+Implementation-Vendor: Pivotal Software, Inc.
+Created-By: Maven Integration for Eclipse
+

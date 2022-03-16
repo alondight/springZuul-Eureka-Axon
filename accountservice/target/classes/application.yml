@@ -1,0 +1,23 @@
+server:
+  port: 9092
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+
+spring:
+  application:
+    name: account-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: 1111

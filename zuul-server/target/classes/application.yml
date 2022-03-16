@@ -1,0 +1,67 @@
+server:
+  port: 9090
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true  
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+# zuul gateway 설정
+zuul:
+  ignored-service: "*"
+  prefix: /api 
+  routes:
+    account-service:
+      path: /account-service/**
+      url: http://127.0.0.1:9092
+    node-service:
+      path: /node-service/**
+      url: http://127.0.0.1:9091
+    django-service:
+      path: /django-service/**
+      serviceId: django-service
+#      stripPrefix: true
+    aaa-service:
+      path: /aaa-service/**
+      url: http://127.0.0.1:9093
+    bbb-service:
+      path: /bbb-service/**
+      url: http://127.0.0.1:9094
+
+spring:
+  application:
+    name: zuul-api-gateway-server
+
+# hystrix yaml로 설정하는 방법
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 32000
+      circuitBreaker:
+        enabled: true
+        requestVolumeThreshold: 3
+        sleepWindowInMilliseconds: 5000
+        errorThresholdPercentage: 50
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 10000
+
+# django-service 설정
+ribbon:
+  eureka:
+    enabled: false
+
+django-service:
+  ribbon:
+    NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    listOfServers: http://localhost:8000,http://localhost:8001
+    ConnectTimeout: 1000
+    ReadTimeout: 3000
+    MaxTotalHttpConnections: 500
+    MaxConnectionsPerHost: 100
+              
